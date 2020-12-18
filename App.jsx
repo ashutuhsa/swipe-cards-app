@@ -4,6 +4,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import Deck from './src/Deck'
 import CustomCard from './src/CustomCard'
 
+console.reportErrorsAsExceptions = false
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
