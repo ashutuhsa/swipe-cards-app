@@ -14,9 +14,12 @@ const SWIPE_OUT_DURATION = 300
 
 const Deck = (props) => {
   const {
-    data, CustomCard, onSwipeLeft, onSwipeRight,
+    data,
+    CustomCard,
+    onSwipeLeft,
+    onSwipeRight,
   } = props
-  const position = new Animated.ValueXY()
+  const position = useRef(new Animated.ValueXY()).current
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const resetPosition = () => {
@@ -31,11 +34,10 @@ const Deck = (props) => {
     // eslint-disable-next-line no-unused-expressions
     direction === 'right' ? onSwipeRight(item) : onSwipeLeft(item)
     position.setValue({ x: 0, y: 0 })
-    // currentIndex += 1
-    const newIndex = currentIndex + 1
-    setCurrentIndex(newIndex)
 
-    console.log('currentIndex was changed:', newIndex)
+    console.log('previous:', currentIndex)
+    console.log('next:', currentIndex + 1)
+    setCurrentIndex(currentIndex + 1)
   }
 
   const forceSwipe = (direction) => {
@@ -56,7 +58,7 @@ const Deck = (props) => {
       },
       onPanResponderRelease: (event, gesture) => {
         if (gesture.dx > SWIPE_THRESHOLD) {
-          console.log('swipe right')
+          console.log('swipe right. Current index: ', currentIndex)
           forceSwipe('right')
         } else if (gesture.dx < -SWIPE_THRESHOLD) {
           console.log('swipe left')
@@ -82,10 +84,10 @@ const Deck = (props) => {
   }
 
   const renderCards = () => data.map((item, i) => {
-    console.log('current i:', i)
-    console.log('current index:', currentIndex)
-
-    if (i < currentIndex) { return null }
+    if (i < currentIndex) {
+      console.log('skip item:', item)
+      return null
+    }
 
     if (i === currentIndex) {
       return (
@@ -121,6 +123,8 @@ const Deck = (props) => {
 Deck.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   CustomCard: PropTypes.func.isRequired,
+  onSwipeLeft: PropTypes.func,
+  onSwipeRight: PropTypes.func,
 }
 
 Deck.defaultProps = {

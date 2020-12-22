@@ -27,15 +27,15 @@ const DATA = [
   { id: 11, title: 'Card #11', uri: 'https://robohash.org/AY11.png?set=set2' },
 ]
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Swipe App</Text>
-      <Deck
-        data={DATA}
-        CustomCard={CustomCard}
-      />
-      <StatusBar />
-    </View>
-  )
-}
+const App = () => (
+  <View style={styles.container}>
+    <Text>Swipe App</Text>
+    <Deck
+      data={DATA}
+      CustomCard={CustomCard}
+    />
+    <StatusBar />
+  </View>
+)
+
+export default App

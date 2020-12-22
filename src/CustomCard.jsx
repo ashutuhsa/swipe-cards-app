@@ -19,7 +19,7 @@ const CustomCard = (props) => {
         style={{ width: 200, height: 200 }}
       />
       <Text style={{ marginBottom: '2em' }}>
-        Some text here
+        {title}
       </Text>
       <Button
         icon={{ name: 'code' }}
